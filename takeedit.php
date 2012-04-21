@@ -64,8 +64,8 @@ if (!function_exists('is_valid_url')) {
 * @End
 */
 $nfoaction = '';
-
-$select_torrent = sql_query('SELECT name, descr, category, visible, vip, release_group, poster, url, newgenre, description, anonymous, sticky, owner, allow_comments, nuked, nukereason, filename, save_as, youtube, recommended, tags, info_hash FROM torrents WHERE id = '.sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+//Removed from line below  (recommended,)   Causes Error in file,  No recommended feild in Torrents table???  //
+$select_torrent = sql_query('SELECT name, descr, category, visible, vip, release_group, poster, url, newgenre, description, anonymous, sticky, owner, allow_comments, nuked, nukereason, filename, save_as, youtube, tags, info_hash FROM torrents WHERE id = '.sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 $fetch_assoc = mysqli_fetch_assoc($select_torrent) or stderr('Error', 'No torrent with this ID!');
 
 $infohash = $fetch_assoc['info_hash'];
