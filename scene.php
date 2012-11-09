@@ -19,13 +19,13 @@ $HTMLOUT = $curuser_cache = $user_cache = $stats_cache = $user_stats_cache = '';
 //get the config from db
 $pconf = sql_query('SELECT name, value FROM paypal_config') or sqlerr(__FILE__, __LINE__);
 while ($ac = mysqli_fetch_assoc($pconf)) $paypal_config[$ac['name']] = $ac['value'];
-//GB TO GIVE PER £//
+//GB TO GIVE PER ï¿½//
 $givegb = $paypal_config['gb'] * 1024 * 1024 * 1024;
-//$givegb = 1*1024*1024; //1GB per £1 donated
-//TIME TO GIVE PER £5//
+//$givegb = 1*1024*1024; //1GB per ï¿½1 donated
+//TIME TO GIVE PER ï¿½5//
 $givetime = $paypal_config['weeks'] * 604800;
-//$givetime = 0.5*108000; //108000 = 30 days  //set for 15 days per £5 donated
-//INVITES TO GIVE PER £5//
+//$givetime = 0.5*108000; //108000 = 30 days  //set for 15 days per ï¿½5 donated
+//INVITES TO GIVE PER ï¿½5//
 $giveinvites = $paypal_config['invites'];
 //$giveinvites = 1;
 $email = $paypal_config['email'];
@@ -110,8 +110,8 @@ if ($payment_type == 'instant' && $payment_status == 'Completed' && $payment_amo
     //=== check to see if they are a donor yet
     $donorlength = $donated / 5;
     if ($user['donor'] == 'no') {
-        $donoruntil = TIME_NOW + $donorlength * $givetime; //===> 2419200 = 2 weeks for 5£ --- 1209600 = 1 week for 5£ donation
-        $donoruntil_val = TIME_NOW + $donorlength * $givetime; //===> 1209600 = 2 weeks for 5$ --- 604800 = 1 week for 5£ donation
+        $donoruntil = TIME_NOW + $donorlength * $givetime; //===> 2419200 = 2 weeks for 5ï¿½ --- 1209600 = 1 week for 5ï¿½ donation
+        $donoruntil_val = TIME_NOW + $donorlength * $givetime; //===> 1209600 = 2 weeks for 5$ --- 604800 = 1 week for 5ï¿½ donation
         $dur = $donorlength." week".($donorlength > 1 ? "s" : ""); //=== I left the 1 ? "s" in case you want to have only one week...
         $subject = sqlesc("Thank You for Your Donation!");
         $msg = sqlesc("Dear ".htmlsafechars($user['username'])."
@@ -171,9 +171,11 @@ PS. Your donator status will last for an extra ".$dur." on top of your current d
     $added = TIME_NOW;
     sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES (0, $subject, ".sqlesc($id).", $msg, $added)") or sqlerr(__FILE__, __LINE__);
     if ($CURUSER['class'] < UC_UPLOADER) //=== set this to the lowest class you don't want changed to VIP
+    {
     $updateset[] = "class = '".UC_VIP."'";
     $curuser_cache['class'] = UC_VIP;
     $user_cache['class'] = UC_VIP;
+}
     //=== Add ModComment to the update set...
     $updateset[] = "modcomment = ".sqlesc($modcomment);
     $user_stats_cache['modcomment'] = $modcomment;
