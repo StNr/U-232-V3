@@ -156,9 +156,12 @@ $curuser_cache = $user_cache = $stats_cache = $user_stats_cache = '';
        $res = sql_query("SELECT class FROM users WHERE id = $userid") or sqlerr(__file__,__line__);
        $arr = mysqli_fetch_array($res);
        if ($user['class'] < UC_UPLOADER)
+       //Added so class's over VIP do not have cache set for being VIP
+       {
        $updateset[] = "class = ".UC_VIP."";
        $curuser_cache['class'] = UC_VIP;
        $user_cache['class'] = UC_VIP;
+       }
        }
     
     // === add to donor length // thanks to CoLdFuSiOn
